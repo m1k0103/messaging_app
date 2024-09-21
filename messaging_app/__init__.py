@@ -1,8 +1,9 @@
 import sqlite3
 import os
+from messaging_app.func import get_db_name
 
 def start():
-    DB_NAME = "database.db"
+    DB_NAME = get_db_name()
 
     if DB_NAME not in os.listdir():
         db = open(f"./{DB_NAME}", "w+")
@@ -14,7 +15,7 @@ def start():
         cursor.execute("""CREATE TABLE userdata(
                        uid INTEGER PRIMARY KEY,
                        username TEXT,
-                       passcode TEXT,
+                       password TEXT,
                        ip TEXT,
                        last_active TEXT
                        )""")
@@ -29,5 +30,5 @@ def start():
         con.close()
         print("db created")
 
-    from messaging_app.main import app
+    from messaging_app.routes import app
     app.run(host="0.0.0.0",port="5000",debug=True)
