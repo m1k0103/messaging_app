@@ -6,18 +6,44 @@
     </head>
     <body>
 
-        <div class="chat-container">
-            <p class="username">bob50</p>
-            <p class="message">Hello world!</p>
+        {% if session.nickname %}
+
+        <div id="for_messages"></div>
+
+        <div class="input">
+            <form action="/sendmessage" method="post">
+                <input type="text" value="Enter message..." id="message" name="message">
+                <input type="submit" value="Submit">
+            </form>
         </div>
+
+        {% else %}
+            <form action="/" method="post">
+                <input type="text" id="nickname" name="nickname" value="Input your nickname">
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+
+        
+        <script>
+
+            const scrollingElement = (document.scrollingElement || document.body);
+            scrollingElement.scrollTop = scrollingElement.scrollHeight;
+
+            async function get_messages(){
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function(){
+                    document.getElementById("for_messages").innerHTML = this.responseText
+                }
+                xhttp.open("GET", "/getmessages", true)
+                xhttp.send()
+            }
+            setInterval(get_messages, 1000)
+            document.onload = get_messages()
+        </script>
+
     </body>
 
-    <div class="input">
 
-        <form action="/" method="post">
-
-        </form>
-
-    </div>
-
+   
 </html>
