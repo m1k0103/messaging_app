@@ -2,6 +2,8 @@ import sqlite3
 import yaml
 import datetime
 import time
+import random
+import string
 
 def get_db_name():
     with open("config.yaml") as f:
@@ -14,7 +16,7 @@ class Database:
         self.database = database
 
     def add_message_to_db(self,sender,message):
-        current_timestamp = time.mktime(datetime.datetime.strptime(str(datetime.datetime.today()).split(" ")[0],'%Y-%m-%d').timetuple())
+        current_timestamp = time.time()
         con = sqlite3.connect(self.database)
         cursor = con.cursor()
         cursor.execute("INSERT INTO messages(sender_id,message,timestamp) VALUES((SELECT uid FROM userdata WHERE username=?),?,?)", [sender,message,current_timestamp])
@@ -25,6 +27,7 @@ class Database:
     def log_ip(self,request,username):
         request.environ['REMOTE_ADDR']
         con = sqlite3.connect(self.database)
+        pass
 
     def create_user(self,username,password):
         con = sqlite3.connect(self.database)
@@ -32,12 +35,23 @@ class Database:
         cursor.execute("INSERT INTO userdata(username,password,ip,last_active) VALUES (?,?,?,?)", [username,password,0,0])
         con.commit()
         con.close()
+    
+    def get_last_messages(self, count):
+        con = sqlite3.connect(self.database)
+        cursor = con.cursor()
+        result = cursor.execute("SELECT userdata.username,messages.message,messages.timestamp FROM userdata JOIN messages ON messages.sender_id=userdata.uid ORDER BY timestamp ASC LIMIT ?", [count]).fetchall()
 
-        
+        messages = [list(tup) for tup in result] # converts all tuples to lists
+        return messages
 
+#def populate_messages(db):
+#    for i in range(10):
+#        db.add_message_to_db(random.choice(["larry", "bob"]),"".join(random.choices(string.ascii_letters, k=5)))
 
-#create_user("larry","betterpassword123")
+#db = Database(get_db_name())
 
-db = Database(get_db_name())
+#db.create_user("larry","betterpassword123")
+#db.create_user("bob", "password1234")
 
-#db.add_message_to_db("bob", "Hello larry!")
+#populate_messages(db)
+#db.get_last_messages(10)
