@@ -14,19 +14,20 @@ body{
     border: 2px black solid;
     display: flex;
 }
-.chat-container::after{
-    content: "";
-    clear: both;
-    display: table;
-}
 .username{
     text-align: left;
-    padding-left: 30px;
+    padding-left: 1em;
     margin-right: 1em;
     padding-right: 1em;
     border-right: 2px black solid;
 }
 .message{
     text-align: left;
-    padding-right: 2px;
+    padding-right: 1px;
+}
+.time{
+    font-size: x-small;
+    float: right;
+    border-right: 2px black solid;
+    padding-right: 1em;
 }
