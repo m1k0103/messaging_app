@@ -24,10 +24,13 @@ class Database:
         con.commit()
         con.close()
 
-    def log_ip(self,request,username):
-        request.environ['REMOTE_ADDR']
+    def log_ip(self,ip,username):
         con = sqlite3.connect(self.database)
-        pass
+        cursor = con.cursor()
+        cursor.execute("UPDATE userdata SET ip=?  WHERE username=?;", [ip,username])
+        con.commit()
+        con.close()
+        print(f"ip of {username} logged: {ip}")
 
     def create_user(self,username,password):
         con = sqlite3.connect(self.database)
