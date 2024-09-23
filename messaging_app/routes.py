@@ -10,12 +10,12 @@ app.secret_key = "secret_key" # not secure lol
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "GET":
-        #previous_20_messages = 
         return render_template("main.html")
     elif request.method == "POST":
         nickname = request.form["nickname"]
         db.create_user(nickname,"")
         session["nickname"] = nickname
+        db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
         return render_template("main.html")
 
 @app.route("/sendmessage",methods=["POST"])
@@ -24,10 +24,12 @@ def send_message():
     message = request.form["message"]
     print(user,message)
     db.add_message_to_db(user,message)
+    db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
     return render_template("main.html")
 
 @app.route("/getmessages",methods=["GET"])
 def get_messages():
     messages = db.get_last_messages(20)
+    db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
     return render_template("messages.html", messages_list=messages)
     
