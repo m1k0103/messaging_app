@@ -12,14 +12,16 @@
 
         <div class="input">
             <form action="/sendmessage" method="post">
-                <input type="text" value="Enter message..." id="message" name="message">
+                <label for="message">Enter message:</label>
+                <input type="text" id="message" name="message">
                 <input type="submit" value="Submit">
             </form>
         </div>
 
         {% else %}
             <form action="/" method="post">
-                <input type="text" id="nickname" name="nickname" value="Input your nickname">
+                <label for="nickname">Enter your nickname:</label>
+                <input type="text" id="nickname" name="nickname">
                 <input type="submit" value="Submit">
             </form>
         {% endif %}
