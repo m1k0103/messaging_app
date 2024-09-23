@@ -46,6 +46,10 @@ class Database:
 
         messages = [list(tup) for tup in result] # converts all tuples to lists
         return messages
+    
+    def if_user_exists(self,nickname):
+        con = sqlite3.connect(self.database)
+        cursor = con.cursor() # CARRY ON FROM HERE!!!!!
 
 #def populate_messages(db):
 #    for i in range(10):
