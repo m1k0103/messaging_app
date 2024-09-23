@@ -13,10 +13,15 @@ def home():
         return render_template("main.html")
     elif request.method == "POST":
         nickname = request.form["nickname"]
-        db.create_user(nickname,"")
-        session["nickname"] = nickname
-        db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
-        return render_template("main.html")
+        password = request.form["password"]
+        if db.if_user_exists(nickname) == True:
+            if 
+            return render_template()
+        else: # if user doesnt exist
+            db.create_user(nickname,password)
+            session["nickname"] = nickname
+            db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
+            return render_template("main.html")
 
 @app.route("/sendmessage",methods=["POST"])
 def send_message():
