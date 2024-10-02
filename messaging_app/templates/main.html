@@ -42,7 +42,13 @@
             async function get_messages(){
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function(){
-                    document.getElementById("for_messages").innerHTML = this.responseText
+                    const response = this.responseText
+                    if (response == document.getElementById("for_messages").innerHTML){
+                        console.log("no changes detected")
+                    }
+                    else{
+                        document.getElementById("for_messages").innerHTML = response
+                    }
                 }
                 xhttp.open("GET", "/getmessages", true)
                 xhttp.send()
