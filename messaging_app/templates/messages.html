@@ -1,6 +1,6 @@
 {% for user,message,timestamp in messages_list %}
     <div class="chat-container">
-        <p class="time">{{ timestamp }}</p>
+        <p class="time"><time datetime="{{ timestamp }}">{{ timestamp }}</time></p>
         <p class="username">{{ user }}</p>
         <p class="message">{{ message }}</p>
     </div>
