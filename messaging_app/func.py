@@ -1,6 +1,6 @@
 import sqlite3
 import yaml
-import datetime
+from datetime import datetime
 import time
 import random
 import string
@@ -10,6 +10,10 @@ def get_db_name():
         conf = yaml.load(f, Loader=yaml.FullLoader)
         DB_NAME = conf["database_name"]
         return DB_NAME
+
+def timestamp_to_date(timestamp):
+    dt_obj = datetime.fromtimestamp(int(str(timestamp).split(".")[0]))
+    return dt_obj
 
 class Database:
     def __init__(self,database):
@@ -45,6 +49,8 @@ class Database:
         result = cursor.execute("SELECT userdata.username,messages.message,messages.timestamp FROM userdata JOIN messages ON messages.sender_id=userdata.uid ORDER BY timestamp ASC LIMIT ?", [count]).fetchall()
 
         messages = [list(tup) for tup in result] # converts all tuples to lists
+        for l in messages:
+            l[2] = timestamp_to_date(l[2])
         return messages
     
     def if_user_exists(self,nickname):
