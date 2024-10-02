@@ -4,6 +4,8 @@ body{
     justify-content: center;
     margin: 0;
     padding-top: 3%;
+    font-family: Ubuntu, "times new roman", times, roman, serif;
+
 }
 .chat-container{
     margin-left: 3%;
@@ -26,8 +28,10 @@ body{
     padding-right: 1px;
 }
 .time{
-    font-size: x-small;
+    font-size: smaller;
     float: right;
+    text-align: center;
     border-right: 2px black solid;
     padding-right: 1em;
+    padding: 3px;
 }
