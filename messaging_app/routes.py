@@ -15,7 +15,7 @@ def home():
         nickname = request.form["nickname"]
         password = request.form["password"]
         if db.if_user_exists(nickname) == True:
-            if 
+            #if 
             return render_template()
         else: # if user doesnt exist
             db.create_user(nickname,password)
