@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, session, url_for
+from flask import Flask, render_template, jsonify, request, session, url_for, redirect
 from messaging_app.func import Database, get_db_name
 
 db = Database(get_db_name())
@@ -15,13 +15,17 @@ def home():
         nickname = request.form["nickname"]
         password = request.form["password"]
         if db.if_user_exists(nickname) == True:
-            #if 
-            return render_template()
+            if db.check_pass(nickname,password) == True:
+                session["nickname"] = nickname
+                db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
+                return redirect(url_for("home"))
+            else:
+                return redirect(url_for("home"))
         else: # if user doesnt exist
             db.create_user(nickname,password)
             session["nickname"] = nickname
             db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
-            return render_template("main.html")
+            return redirect(url_for("home"))
 
 @app.route("/sendmessage",methods=["POST"])
 def send_message():
@@ -30,7 +34,7 @@ def send_message():
     print(user,message)
     db.add_message_to_db(user,message)
     db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
-    return render_template("main.html")
+    return redirect(url_for("home"))
 
 @app.route("/getmessages",methods=["GET"])
 def get_messages():
@@ -38,3 +42,9 @@ def get_messages():
     db.log_ip(request.environ['REMOTE_ADDR'],session["nickname"])
     return render_template("messages.html", messages_list=messages)
     
+
+@app.route("/logout",methods=["POST"])
+def logout():
+    if request.method == "POST":
+        session.clear()
+        return redirect(url_for("home"))
