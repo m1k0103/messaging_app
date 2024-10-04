@@ -55,7 +55,26 @@ class Database:
     
     def if_user_exists(self,nickname):
         con = sqlite3.connect(self.database)
-        cursor = con.cursor() # CARRY ON FROM HERE!!!!!
+        cursor = con.cursor() # CARRY ON FROM HERE!!!!! 
+        res = cursor.execute("SELECT username FROM userdata WHERE username=?", [nickname]).fetchall()
+        con.close()
+        if len(res) > 0:
+            return True
+        else:
+            return False
+
+    def check_pass(self,username,password):
+        con = sqlite3.connect(self.database)
+        cursor = con.cursor()
+        res = cursor.execute("SELECT password FROM userdata WHERE username=?", [username]).fetchall()[0][0]
+        con.close()
+        print(f"RES: {res}")
+        if password == res:
+            return True # when password is correct
+        else:
+            return False # when incorrect
+            
+
 
 #def populate_messages(db):
 #    for i in range(10):
