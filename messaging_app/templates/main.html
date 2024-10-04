@@ -8,6 +8,7 @@
     <body>
 
         {% if session.nickname %}
+        <form style='margin: 0; margin-top:0;' action="/logout" method="post"><input type="submit" value="Logout"></form>
 
         <div id="for_messages"></div>
 
@@ -19,22 +20,6 @@
             </form>
         </div>
 
-        {% else %}
-            <form action="/" method="post">
-                <label for="nickname">Enter your nickname:</label>
-                <input type="text" id="nickname" name="nickname">
-
-                <label for="password">Enter your password:</label>
-                <input type="password" id="password" name="password">
-                <p><b><i>
-                    If you don't have an account, an account will automatically be created. <br>
-                    If you do have an account, you will just be signed into your account if the password is correct.
-                </i></b></p>
-                <input type="submit" value="Submit">
-            </form>
-        {% endif %}
-
-        
         <script>
 
             const scrollingElement = (document.scrollingElement || document.body);
@@ -57,6 +42,24 @@
             setInterval(get_messages, 1000)
             document.onload = get_messages()
         </script>
+
+        {% else %}
+            <form action="/" method="post">
+                <label for="nickname">Enter your nickname:</label>
+                <input type="text" id="nickname" name="nickname">
+
+                <label for="password">Enter your password:</label>
+                <input type="password" id="password" name="password">
+                <p><b><i>
+                    If you don't have an account, an account will automatically be created. <br>
+                    If you do have an account, you will just be signed into your account if the password is correct.
+                </i></b></p>
+                <input type="submit" value="Submit">
+            </form>
+        {% endif %}
+
+        
+
 
     </body>
 
