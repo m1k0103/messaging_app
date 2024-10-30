@@ -4,6 +4,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename= 'style.css') }}">
         <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Ubuntu:regular,bold&subset=Latin">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
 
@@ -39,7 +40,7 @@
                 xhttp.open("GET", "/getmessages", true)
                 xhttp.send()
             }
-            setInterval(get_messages, 1000)
+            setInterval(get_messages, 2000)
             document.onload = get_messages()
         </script>
 
