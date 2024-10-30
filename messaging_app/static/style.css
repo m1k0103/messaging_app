@@ -23,9 +23,15 @@ body{
     padding-right: 1em;
     border-right: 2px black solid;
 }
-.message{
+.chat-container .message{
     text-align: left;
     padding-right: 1px;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    inline-size: 100vw;
+    width: 100vw;
+    /*border: 1px yellow solid;*/
+    hyphens: manual;
 }
 .time{
     font-size: smaller;
@@ -34,4 +40,9 @@ body{
     border-right: 2px black solid;
     padding-right: 1em;
     padding: 3px;
+}
+.input{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;    
 }
