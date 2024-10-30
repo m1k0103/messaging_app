@@ -46,11 +46,12 @@ class Database:
     def get_last_messages(self, count):
         con = sqlite3.connect(self.database)
         cursor = con.cursor()
-        result = cursor.execute("SELECT userdata.username,messages.message,messages.timestamp FROM userdata JOIN messages ON messages.sender_id=userdata.uid ORDER BY timestamp ASC LIMIT ?", [count]).fetchall()
+        result = cursor.execute("SELECT userdata.username,messages.message,messages.timestamp FROM userdata JOIN messages ON messages.sender_id=userdata.uid ORDER BY timestamp DESC LIMIT ?", [count]).fetchall()
 
         messages = [list(tup) for tup in result] # converts all tuples to lists
         for l in messages:
             l[2] = timestamp_to_date(l[2])
+        messages = messages[::-1]
         return messages
     
     def if_user_exists(self,nickname):
