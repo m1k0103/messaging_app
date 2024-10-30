@@ -22,9 +22,14 @@
         </div>
 
         <script>
+            async function scroll(){
+                //window.scrollTo(0, document.body.scrollHeight);
+                //const scrollingElement = (document.scrollingElement || document.body);
+                //scrollingElement.scrollTop = scrollingElement.scrollHeight;
+                console.log("scrolled")
+                window.scrollTo(0,9999);
 
-            const scrollingElement = (document.scrollingElement || document.body);
-            scrollingElement.scrollTop = scrollingElement.scrollHeight;
+            }
 
             async function get_messages(){
                 const xhttp = new XMLHttpRequest();
@@ -35,6 +40,7 @@
                     }
                     else{
                         document.getElementById("for_messages").innerHTML = response
+                        scroll()
                     }
                 }
                 xhttp.open("GET", "/getmessages", true)
